@@ -29,6 +29,7 @@ async function run() {
             res.send(services);
         })
 
+        // limited data to show on home page
         app.get('/serviceshome', async(req, res) => {
             const query = {};
             const cursor = serviceCollection.find(query);
@@ -36,12 +37,21 @@ async function run() {
             res.send(services);
         })
 
+        // individual service data
         app.get('/services/:id', async(req, res) => {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
             const service = await serviceCollection.findOne(query);
             res.send(service)
         })
+
+        // post data to service
+        app.post('/services', async(req, res) => {
+            const service = req.body;
+            const result = await serviceCollection.insertOne(service);
+            res.send(result);
+        })
+
 
     }
     finally{
