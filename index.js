@@ -69,6 +69,11 @@ async function run() {
                     serviceId: req.query.serviceId
                 }
             }
+            if(req.query.email){
+                query = {
+                    email: req.query.email
+                }
+            }
 
             const cursor = reviewCollection.find(query);
             const reviews = await cursor.toArray();
