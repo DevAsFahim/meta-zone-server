@@ -13,10 +13,11 @@ app.use(cors());
 app.use(express.json());
 
 
-
+// mongo db initialization
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.3q2ltkd.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+// crud operation function
 async function run() {
     try {
         const serviceCollection = client.db('metaZone').collection('services');
@@ -104,6 +105,7 @@ async function run() {
             res.send(blog)
         })
 
+        // home page limited block
         app.get('/blogshome', async (req, res) => {
             const query = {};
             const cursor = blogCollection.find(query);
@@ -119,7 +121,7 @@ async function run() {
 run().catch(err => console.error(err))
 
 
-
+// default page
 app.get('/', (req, res) => {
     res.send('meta zone server running')
 })
